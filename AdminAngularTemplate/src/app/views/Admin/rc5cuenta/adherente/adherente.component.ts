@@ -16,7 +16,8 @@ export class AdherenteComponent {
  adherente= "";
  nombres = "";
  cedula = "";
- valsinadherente = false
+ valsinadherente = false;
+ errorCedula = false
   constructor(private filtroAderente:FiltroReporteService) { }
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class AdherenteComponent {
   }
 
   checkInputLength(event: Event) {
+    this.errorCedula = false
     const value = (event.target as HTMLInputElement).value;
     if (value.length === 10) {
       this.imgLoading=true
@@ -36,11 +38,16 @@ export class AdherenteComponent {
               this.valsinadherente = true;
               this.filtroAderente.getNombreSRI(value).subscribe({
                 next:(result:any) =>{
+                  debugger
                   this.nombres = result['contribuyente']['nombreComercial'];
                   this.cedula = value;
                   this.loading = false;
                 },error:error => {
-                  console.log(error);
+                  this.loading = false;
+                  this.valsinadherente = true;
+                  this.imgLoading = false
+                  this.errorCedula = true;
+                  this.sinadherente = "Numero de cédula incorrecto"
                 }
               })
             }
@@ -52,7 +59,12 @@ export class AdherenteComponent {
               this.loading = false;
             }
           },error:error => {
-            console.log(error);
+            console.log(error); 
+            this.loading = false;
+                  this.valsinadherente = true;
+                  this.imgLoading = false
+                  this.errorCedula = true;
+                  this.sinadherente = "Error del sistema"
           }
         })
       }, 1000);

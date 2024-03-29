@@ -27,6 +27,7 @@
         </form>
     </c-callout>
     </c-card>
+    <label *ngIf="errorCedula == true" cLabel class="sinadherente">{{sinadherente}}</label>
     <c-card *ngIf="imgLoading == false">
         <img src="https://yosoyrc5.com/rc5.png" alt="">
     </c-card>
@@ -67,8 +68,8 @@
         <input cFormControl name="validationCustom01" id="validationCustom01" required [(ngModel)]="nombres" type="text"  disabled />
       </c-col>
       <c-col [md]="12" style="text-align: center;">
-        <label  *ngIf="valsinadherente == false" cLabel class="adherente">{{nombres}} con CI: {{cedula}} es {{adherente}}</label>
-        <label *ngIf="valsinadherente == true" cLabel class="adherente">{{sinadherente}}</label>
+        <label  *ngIf="valsinadherente == false" cLabel class="adherente">{{nombres}} con CI: {{cedula}} {{adherente.length < 10 ? 'es solo' : 'es'}} {{adherente}}</label>
+        <label *ngIf="valsinadherente == true" cLabel class="sinadherente">{{sinadherente}}</label>
     </c-col>
     
       <!-- <c-col [md]="3">

@@ -58,7 +58,7 @@ export class AdherentesComponent {
               this.loading = false;
             }
           },error:error => {
-            console.log(error);
+            console.log(error); 
             this.loading = false;
                   this.valsinadherente = true;
                   this.imgLoading = false

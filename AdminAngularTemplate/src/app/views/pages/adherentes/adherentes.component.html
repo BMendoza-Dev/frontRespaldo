@@ -66,8 +66,8 @@
         <input cFormControl name="validationCustom01" id="validationCustom01" required [(ngModel)]="nombres" type="text"  disabled />
       </c-col>
       <c-col [md]="12" style="text-align: center;">
-        <label  *ngIf="valsinadherente == false" cLabel class="adherente">{{nombres}} con CI: {{cedula}} es {{adherente}}</label>
-        <label *ngIf="valsinadherente == true" cLabel class="adherente">{{sinadherente}}</label>
+        <label  *ngIf="valsinadherente == false" cLabel class="adherente">{{nombres}} con CI: {{cedula}} {{adherente.length < 10 ? 'es solo' : 'es'}} {{adherente}}</label>
+        <label *ngIf="valsinadherente == true" cLabel class="sinadherente">{{sinadherente}}</label>
     </c-col>
     </form>
     </div>
@@ -78,7 +78,7 @@
             <c-card-body class="text-center">
               <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
                 <div>
-                  <img src="../../../../assets/img/Logo_UNES.png" style="max-width: 190px;">
+                  <img src="../../../../assets/img/manual RC5-1.png" style="max-width: 190px;">
                 </div>
               </div>
             </c-card-body>
