@@ -8,9 +8,9 @@ export class FiltroReporteService {
   urlAWS: string;
   url:string;
   constructor(private http: HttpClient) {
-    this.urlLocal = "http://127.0.0.1:8000/api/"
-    this.urlAWS = "http://161.22.42.218/api/"
-    this.url = this.urlAWS
+    this.urlLocal = "http://127.0.0.1:8000/api/";
+    this.urlAWS = "http://adherenteservice.revolucionciudadana.com.ec/api/";
+    this.url = this.urlAWS;
   }
 
   filterCedula(cedula:any){
