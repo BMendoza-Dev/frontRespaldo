@@ -9,7 +9,7 @@ export class FiltroReporteService {
   url:string;
   constructor(private http: HttpClient) {
     this.urlLocal = "http://127.0.0.1:8000/api/";
-    this.urlAWS = "http://adherenteservice.revolucionciudadana.com.ec/api/";
+    this.urlAWS = "https://adherenteservice.revolucionciudadana.com.ec/api/";
     this.url = this.urlAWS;
   }
 
@@ -19,8 +19,31 @@ export class FiltroReporteService {
   }
 
   getNombreSRI(cedula:any){
-    let url = 'https://srienlinea.sri.gob.ec/movil-servicios/api/v1.0/deudas/porIdentificacion/' + cedula;
-    return this.http.get(url);
+    let url = 'https://adherenteservice.revolucionciudadana.com.ec/api/validarcedula?cedula=' + cedula;
+    // return this.http.get(url);
+    return new Promise((resolve, reject) => {
+      this.http.get(url).subscribe(res => {
+        resolve(res); {
+        }
+      }, error => {
+
+        reject(error);
+      });
+    });
+  }
+
+  datosComplementarios(cedula:any){
+    let url = 'https://adherenteservice.revolucionciudadana.com.ec/api/DataEmpadronado?cedula=' + cedula;
+    // return this.http.get(url);
+    return new Promise((resolve, reject) => {
+      this.http.get(url).subscribe(res => {
+        resolve(res); {
+        }
+      }, error => {
+
+        reject(error);
+      });
+    });
   }
 
   filter(){

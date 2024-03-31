@@ -1,8 +1,8 @@
-// @media only screen and (max-width: 768px) {
-//     .cardImg {
-//       display: none;
-//     }
-//   }
+@media only screen and (max-width: 768px) {
+    .cardImg {
+      margin-bottom: 0px;
+    }
+  }
 
   label {
     font-family: 'Roboto', sans-serif;
@@ -40,4 +40,15 @@ span {
     font-size: 14px !important; 
     font-weight: bold !important;
     color: #e83643  !important;
+}
+
+.form-container {
+  max-height: 400px; /* Altura máxima del contenedor */
+  overflow-y: auto;
+}
+
+.is-required {
+  margin-left: 2px;
+  color: red;
+  font-weight: bold;
 }

@@ -36,19 +36,31 @@ export class AdherenteComponent {
             if(result['mensaje']){
               this.sinadherente = result['mensaje'];
               this.valsinadherente = true;
-              this.filtroAderente.getNombreSRI(value).subscribe({
-                next:(result:any) =>{
-                  debugger
-                  this.nombres = result['contribuyente']['nombreComercial'];
-                  this.cedula = value;
-                  this.loading = false;
-                },error:error => {
-                  this.loading = false;
-                  this.valsinadherente = true;
-                  this.imgLoading = false
-                  this.errorCedula = true;
-                  this.sinadherente = "Numero de cédula incorrecto"
-                }
+              this.filtroAderente.getNombreSRI(value)
+              // .subscribe({
+              //   next:(result:any) =>{
+              //     debugger
+              //     this.nombres = result.nombre;
+              //     this.cedula = value;
+              //     this.loading = false;
+              //   },error:error => {
+              //     this.loading = false;
+              //     this.valsinadherente = true;
+              //     this.imgLoading = false
+              //     this.errorCedula = true;
+              //     this.sinadherente = "Numero de cédula incorrecto"
+              //   }
+              // })
+              .then((data:any) => {
+                  this.nombres = data.nombre;
+                    this.cedula = value;
+                    this.loading = false;
+              }).catch((error:any)=> {
+                this.loading = false;
+                    this.valsinadherente = true;
+                    this.imgLoading = false
+                    this.errorCedula = true;
+                    this.sinadherente = "Numero de cédula incorrecto"
               })
             }
             if (result['cedula']){

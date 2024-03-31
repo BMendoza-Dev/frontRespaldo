@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FiltroReporteService } from 'src/app/servicios/filtro-reporte.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-adherentes',
   templateUrl: './adherentes.component.html',
@@ -15,14 +15,20 @@ export class AdherentesComponent {
  adherente= "";
  nombres = "";
  cedula = "";
+ pais = "";
+ provincia = "";
+ canton = "";
+ parroquia = "";
+ extrangero = false;
  valsinadherente = false
- errorCedula = false
+ errorCedula = false 
   constructor(private filtroAderente:FiltroReporteService) { }
 
   ngOnInit(): void {
     
   }
 
+  error="";
   checkInputLength(event: Event) {
     this.errorCedula = false
     const value = (event.target as HTMLInputElement).value;
@@ -31,23 +37,36 @@ export class AdherentesComponent {
       this.loading = true
       setTimeout(() => {
         this.filtroAderente.filterCedula(value).subscribe({
-          next:(result: any) => {
+          next:(result: any) => { 
             if(result['mensaje']){
               this.sinadherente = result['mensaje'];
               this.valsinadherente = true;
-              this.filtroAderente.getNombreSRI(value).subscribe({
-                next:(result:any) =>{
-                  debugger
-                  this.nombres = result['contribuyente']['nombreComercial'];
-                  this.cedula = value;
-                  this.loading = false;
-                },error:error => {
-                  this.loading = false;
-                  this.valsinadherente = true;
-                  this.imgLoading = false
-                  this.errorCedula = true;
-                  this.sinadherente = "Numero de cédula incorrecto"
-                }
+              this.filtroAderente.getNombreSRI(value)
+              // .subscribe({
+              //   next:(result:any) =>{
+              //     debugger
+              //     this.nombres = result.nombre;
+              //     this.cedula = value;
+              //     this.loading = false;
+              //   },error:error => {
+              //     this.loading = false;
+              //     this.valsinadherente = true;
+              //     this.imgLoading = false
+              //     this.errorCedula = true;
+              //     this.sinadherente = "Numero de cédula incorrecto"
+              //   }
+              // })
+              .then((data:any) => {
+                  this.nombres = data.nombre;
+                    this.cedula = value;
+                    this.loading = false;
+              }).catch((error:any)=> {
+                this.loading = false;
+                    this.valsinadherente = true;
+                    this.imgLoading = false
+                    this.errorCedula = true;
+                    this.sinadherente = "Numero de cédula incorrecto"
+                    this.error = error.message;
               })
             }
             if (result['cedula']){
@@ -57,6 +76,21 @@ export class AdherentesComponent {
               this.valsinadherente = false;
               this.loading = false;
             }
+            this.filtroAderente.datosComplementarios(value).then((data:any) => {
+              console.log(data);
+              let codProvincia = data[0].cod_provincia;
+              if(codProvincia == 26 || codProvincia == 27 || codProvincia == 28){
+                this.pais = "Extranjero"
+                this.extrangero = true;
+              }else{
+                this.pais = "Ecuador";
+              }
+              this.provincia = data[0].nom_provincia;
+              this.canton = data[0].nom_canton;
+              this.parroquia = data[0].nom_parroquia;
+            }).catch((error:any)=> {
+               
+            })
           },error:error => {
             console.log(error); 
             this.loading = false;
@@ -64,10 +98,25 @@ export class AdherentesComponent {
                   this.imgLoading = false
                   this.errorCedula = true;
                   this.sinadherente = "Error del sistema"
+                  this.error = error.message;
           }
         })
       }, 1000);
     }
+  }
+
+  enviar(){
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Tu información fue guardada",
+      showConfirmButton: false,
+      timer: 1500
+    });
+    setTimeout(() => {
+      location.reload();
+    }, 1750);
+    
   }
 
 }

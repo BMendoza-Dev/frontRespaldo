@@ -11,7 +11,7 @@ export class BlogServicesService {
   url:string;
   constructor(private http: HttpClient) {
     this.urlLocal = "http://127.0.0.1:8000/api/"
-    this.urlAWS = "http://adherenteservice.revolucionciudadana.com.ec/api/"
+    this.urlAWS = "https://adherenteservice.revolucionciudadana.com.ec/api/"
     this.url = this.urlAWS
   }
 
